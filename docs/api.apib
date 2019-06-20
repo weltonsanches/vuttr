@@ -1,0 +1,136 @@
+FORMAT: 1A
+HOST: http://localhost:3000
+
+# VUTTR
+
+API to register Very Useful Tools to Remember
+
+# Group About
+
+This API give us endpoints to manage data of tools that can help in Web Development proccess. This data are stored in MongoDB.
+
+# Group Tools
+
+## Tools [/tools]
+
+### List All Questions [GET]
+
++ Response 200 (application/json)
+
+        [
+          {
+              id: 1,
+              title: "Notion",
+              link: "https://notion.so",
+              description: "All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized. ",
+              tags: [
+                  "organization",
+                  "planning",
+                  "collaboration",
+                  "writing",
+                  "calendar"
+              ]
+          },
+          {
+              id: 2,
+              title: "json-server",
+              link: "https://github.com/typicode/json-server",
+              description: "Fake REST API based on a json schema. Useful for mocking and creating APIs for front-end devs to consume in coding challenges.",
+              tags: [
+                  "api",
+                  "json",
+                  "schema",
+                  "node",
+                  "github",
+                  "rest"
+              ]
+          },
+          {
+              id: 3,
+              title: "fastify",
+              link: "https://www.fastify.io/",
+              description: "Extremely fast and simple, low-overhead web framework for NodeJS. Supports HTTP2.",
+              tags: [
+                  "web",
+                  "framework",
+                  "node",
+                  "http2",
+                  "https",
+                  "localhost"
+              ]
+          }
+        ]
+
+### Create a New Tool [POST]
+
+You may add a new Tool to database using this action. It takes a JSON object containing the data from tool.
+
++ Request (application/json)
+
+        {
+          "title": "hotel",
+          "link": "https://github.com/typicode/hotel",
+          "description": "Local app manager. Start apps within your browser, developer tool with local .localhost domain and https out of the box.",
+          "tags":["node", "organizing", "webapps", "domain", "developer", "https", "proxy"]
+        }
+
++ Response 201 (application/json)
+    + Body
+
+            {
+              "title": "hotel",
+              "link": "https://github.com/typicode/hotel",
+              "description": "Local app manager. Start apps within your browser, developer tool with local .localhost domain and https out of the box.",
+              "tags":["node", "organizing", "webapps", "domain", "developer", "https", "proxy"],
+              "id":5
+            }
+
+## Filter By Tag [/tools?tag={tag}]
+
+### Filter By Tag [GET]
+
++ Parameters
+    + tag: node (string, required) - Tag of tool
+
++ Response 200 (application/json)
+    + Body
+
+            [
+              {
+                  id: 2,
+                  title: "json-server",
+                  link: "https://github.com/typicode/json-server",
+                  description: "Fake REST API based on a json schema. Useful for mocking and creating APIs for front-end devs to consume in coding challenges.",
+                  tags: [
+                      "api",
+                      "json",
+                      "schema",
+                      "node",
+                      "github",
+                      "rest"
+                  ]
+              },
+              {
+                  id: 3,
+                  title: "fastify",
+                  link: "https://www.fastify.io/",
+                  description: "Extremely fast and simple, low-overhead web framework for NodeJS. Supports HTTP2.",
+                  tags: [
+                      "web",
+                      "framework",
+                      "node",
+                      "http2",
+                      "https",
+                      "localhost"
+                  ]
+              }
+            ]
+
+## Delete [/tools/{id}]
+
+### Delete Tool [DELETE]
+
++ Parameters
+    + id: 1 (number, required) - Id of tool
+
++ Response 200 (application/json)

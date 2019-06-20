@@ -1,7 +1,7 @@
 {
   "name": "vuttr",
   "version": "1.0.0",
-  "description": "Project to register Very Useful Tools to Remember",
+  "description": "API to register Very Useful Tools to Remember",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -26,6 +26,7 @@
     "mongoose": "^5.6.0"
   },
   "devDependencies": {
+    "aglio": "^2.3.0",
     "nodemon": "^1.19.1"
   }
 }
