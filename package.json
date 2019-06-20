@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/weltonsanches/vuttr.git"
   },
-  "author": "Welton Sanches",
+  "author": "Welton Sanches <sanches.welton@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/weltonsanches/vuttr/issues"
