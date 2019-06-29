@@ -1,19 +1,25 @@
 const path = require('path');
+//const Tools = require('../models/Tools');
 
 const appRouter = (app) => {
 
   app
     .get('/', (req, res) => {
-      const html = `<h1>The <abbr title="Very Useful Tools to Remember">VUTTR</abbr> API is running here.</h1>
-      <p>To see more about this API read the <a href="http://localhost:3000/docs">docs</a></p>`;
-
-      res.send(html);
+      const message = {
+        title: 'VUTTR API',
+        message: 'The VUTTR API is running here. To see more about this API read the docs in http://localhost:3000/docs',
+        docs: 'http://localhost:3000/docs'
+      };
+      res.send(message);
     })
     .get('/docs', (req, res) => {
       res.sendFile(path.resolve(`${__dirname}/../docs/index.html`));
     })
 		.get('/tools', (req, res) => {
-			res.send({ response: 'Tools'});
+
+      if(req.query.tag)
+        response = response.filter(tool => tool.tags.includes(req.query.tag));
+			res.send(response);
     })
     .post('/tools', (req, res) => {
       res.status(201).send('Ok');
