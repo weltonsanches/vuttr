@@ -1,5 +1,5 @@
 const path = require('path');
-//const Tools = require('../models/Tools');
+const Tools = require('../models/Tools');
 
 const appRouter = (app) => {
 
@@ -15,17 +15,34 @@ const appRouter = (app) => {
     .get('/docs', (req, res) => {
       res.sendFile(path.resolve(`${__dirname}/../docs/index.html`));
     })
-		.get('/tools', (req, res) => {
-
-      if(req.query.tag)
-        response = response.filter(tool => tool.tags.includes(req.query.tag));
-			res.send(response);
+		.get('/tools', async (req, res) => {
+      try {
+        let response = !req.query.tag ? await Tools.find({}) : await Tools.find({ tags: req.query.tag });
+        return res.status(200).send(response);
+      } catch (error) {
+        console.log(error);
+        return res.status(400).send('Erro ao buscar ferramentas!');
+      }
     })
-    .post('/tools', (req, res) => {
-      res.status(201).send('Ok');
+    .post('/tools', async (req, res) => {
+      try {
+        const { name } = req.body;
+        if(!name)
+          return res.status(400).send('É necessário que o nome da ferramenta seja enviado!');
+
+        const beforeTool = await Tools.findOne({name});
+        if(beforeTool)
+          return res.status(400).send('Já existe uma ferramente cadastrada com este nome!');
+
+        const response = await Tools.create(req.body);
+        return res.status(201).send(response);
+      } catch (error) {
+        console.log(error)
+        return res.status(400).send('Erro ao cadastrar uma nova ferramenta!');
+      }
     })
     .delete('/tools/:id', function (req, res) {
-      res.status(200).send('Ok');
+      return res.status(200).send('Ok');
     });
 };
 
