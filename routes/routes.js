@@ -41,7 +41,14 @@ const appRouter = (app) => {
         return res.status(400).send('Erro ao cadastrar uma nova ferramenta!');
       }
     })
-    .delete('/tools/:id', function (req, res) {
+    .delete('/tools/:id', async function (req, res) {
+      const { id } = req.params;
+
+      try {
+        await Tools.deleteOne({ _id: id});
+      } catch (error) {
+        console.log(error);
+      }
       return res.status(200).send('Ok');
     });
 };
