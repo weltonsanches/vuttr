@@ -2,7 +2,7 @@ const mongoose = require('../config/dbConnection');
 const Schema = mongoose.Schema;
 
 const ToolsSchema = new Schema({
-  name: { type: String, required: true },
+  title: { type: String, required: true },
   link: String,
   description: String,
   tags: [String],

@@ -2,7 +2,18 @@ const Tools = require('../models/Tools');
 
 const list = async (req, res) => {
   try {
-    let response = !req.query.tag ? await Tools.find({}) : await Tools.find({ tags: req.query.tag });
+    const prepareResponse = !req.query.tag
+    ? await Tools.find({}, 'id title link description tags')
+    : await Tools.find({ tags: req.query.tag });
+    const response = prepareResponse.map(r => {
+      return {
+        id: r._id,
+        title: r.title,
+        link: r.link,
+        description: r.description,
+        tags: r.tags
+      }
+    });
     return res.status(200).send(response);
   } catch (error) {
     console.log(error);
@@ -12,15 +23,23 @@ const list = async (req, res) => {
 
 const create = async (req, res) => {
   try {
-    const { name } = req.body;
-    if(!name)
+    const { title } = req.body;
+    if(!title)
       return res.status(400).send('É necessário que o nome da ferramenta seja enviado!');
 
-    const beforeTool = await Tools.findOne({name});
+    const beforeTool = await Tools.findOne({title});
     if(beforeTool)
       return res.status(400).send('Já existe uma ferramente cadastrada com este nome!');
 
-    const response = await Tools.create(req.body);
+    const prepareResponse = await Tools.create(req.body);
+    const response = {
+      title: prepareResponse.title,
+      link: prepareResponse.link,
+      description: prepareResponse.description,
+      tags: prepareResponse.tags,
+      id: prepareResponse._id
+    };
+    delete response._id;
     return res.status(201).send(response);
   } catch (error) {
     console.log(error)
