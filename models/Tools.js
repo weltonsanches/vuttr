@@ -9,4 +9,4 @@ const ToolsSchema = new Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('User', ToolsSchema);
+module.exports = mongoose.model('Tool', ToolsSchema);

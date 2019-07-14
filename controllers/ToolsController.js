@@ -17,7 +17,7 @@ const list = async (req, res) => {
     return res.status(200).send(response);
   } catch (error) {
     console.log(error);
-    return res.status(400).send('Erro ao buscar ferramentas!');
+    return res.status(500).send('Erro ao buscar ferramentas!');
   }
 };
 
@@ -43,7 +43,7 @@ const create = async (req, res) => {
     return res.status(201).send(response);
   } catch (error) {
     console.log(error)
-    return res.status(400).send('Erro ao cadastrar uma nova ferramenta!');
+    return res.status(500).send('Erro ao cadastrar uma nova ferramenta!');
   }
 };
 const del = async (req, res) => {
@@ -52,7 +52,7 @@ const del = async (req, res) => {
     await Tools.deleteOne({ _id: id});
   } catch (error) {
     console.log(error);
-    return res.status(400).send('Erro ao deletar ferramenta!');
+    return res.status(500).send('Erro ao deletar ferramenta!');
   }
   return res.status(200).send('Ok');
 };
