@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const path = require('path');
 const ToolsController = require('../controllers/ToolsController');
+const UsersController = require('../controllers/UsersController');
 
 router
   .get('/', (req, res) => {
@@ -16,6 +17,9 @@ router
   })
   .get('/tools', ToolsController.list)
   .post('/tools', ToolsController.create)
-  .delete('/tools/:id', ToolsController.del);
+  .delete('/tools/:id', ToolsController.del)
+  .get('/users/', UsersController.list)
+  .post('/users/create', UsersController.create)
+  .post('/users/auth', UsersController.auth);
 
 module.exports = router;

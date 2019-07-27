@@ -17,7 +17,7 @@ const list = async (req, res) => {
     return res.status(200).send(response);
   } catch (error) {
     console.log(error);
-    return res.status(500).send('Erro ao buscar ferramentas!');
+    return res.status(500).send({ error: 'Erro ao buscar ferramentas!' });
   }
 };
 
@@ -25,11 +25,11 @@ const create = async (req, res) => {
   try {
     const { title } = req.body;
     if(!title)
-      return res.status(400).send('É necessário que o nome da ferramenta seja enviado!');
+      return res.status(400).send({ error: 'É necessário que o nome da ferramenta seja enviado!' });
 
     const beforeTool = await Tools.findOne({title});
     if(beforeTool)
-      return res.status(400).send('Já existe uma ferramente cadastrada com este nome!');
+      return res.status(400).send({ error: 'Já existe uma ferramente cadastrada com este nome!' });
 
     const prepareResponse = await Tools.create(req.body);
     const response = {
@@ -43,7 +43,7 @@ const create = async (req, res) => {
     return res.status(201).send(response);
   } catch (error) {
     console.log(error)
-    return res.status(500).send('Erro ao cadastrar uma nova ferramenta!');
+    return res.status(500).send({error: 'Erro ao buscar ferramentas!'});
   }
 };
 const del = async (req, res) => {
@@ -52,7 +52,7 @@ const del = async (req, res) => {
     await Tools.deleteOne({ _id: id});
   } catch (error) {
     console.log(error);
-    return res.status(500).send('Erro ao deletar ferramenta!');
+    return res.status(500).send({error: 'Erro ao buscar ferramentas!'});
   }
   return res.status(200).send('Ok');
 };
